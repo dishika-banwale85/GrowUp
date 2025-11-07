@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %}Create Account | GrowUp{% endblock %}
+{% block content %}
+<div class="form-container">
+  <h2>Create Account 🌱</h2>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Sign Up</button>
+     <div class="google-login">
+  <a href="{% provider_login_url 'google' %}" class="google-btn">
+    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" width="20">
+    Sign in with Google
+  </a>
+</div>
+  </form>
+  <p class="redirect-text">
+    Already have an account? <a href="{% url 'login' %}">Login here</a>
+  </p>
+</div>
+{% endblock %}

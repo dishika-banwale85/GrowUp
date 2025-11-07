@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Contact | GrowUp{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-background py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-5xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">Get In Touch</h1>
+        <p class="text-xl text-muted-foreground">
+          Have questions? We'd love to hear from you.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Contact Form -->
+        <div class="p-8 bg-white shadow-soft rounded-xl">
+          <h2 class="text-2xl font-bold text-primary mb-6">Send us a message</h2>
+          <form class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">Name</label>
+              <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="Your name" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">Email</label>
+              <input type="email" class="w-full border border-gray-300 rounded-md p-2" placeholder="your@email.com" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">Subject</label>
+              <input type="text" class="w-full border border-gray-300 rounded-md p-2" placeholder="How can we help?" />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">Message</label>
+              <textarea class="w-full border border-gray-300 rounded-md p-2 min-h-[150px]" placeholder="Tell us more about your inquiry..."></textarea>
+            </div>
+
+            <button class="w-full bg-primary text-white py-3 rounded-md hover:bg-primary/90 transition">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="space-y-6">
+          <!-- Email -->
+          <div class="p-6 bg-white shadow-soft rounded-xl flex items-start space-x-4">
+            <div class="p-3 rounded-lg bg-secondary/20 text-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 4H8m-2 4h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">Email</h3>
+              <p class="text-muted-foreground">support@growup.com</p>
+              <p class="text-muted-foreground">hello@growup.com</p>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="p-6 bg-white shadow-soft rounded-xl flex items-start space-x-4">
+            <div class="p-3 rounded-lg bg-accent/20 text-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.356 4.07a1 1 0 01-.502 1.21l-2.154 1.077a11.042 11.042 0 005.516 5.516l1.077-2.154a1 1 0 011.21-.502l4.07 1.356A1 1 0 0121 18.72V22a2 2 0 01-2 2h-1C9.716 24 0 14.284 0 3V2a2 2 0 012-2h1z" /></svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">Phone</h3>
+              <p class="text-muted-foreground">+1 (555) 123-4567</p>
+              <p class="text-muted-foreground">Mon-Fri 9am-6pm EST</p>
+            </div>
+          </div>
+
+          <!-- Office -->
+          <div class="p-6 bg-white shadow-soft rounded-xl flex items-start space-x-4">
+            <div class="p-3 rounded-lg bg-primary/20 text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0L6.343 16.657a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11a3 3 0 100-6 3 3 0 000 6z" /></svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">Office</h3>
+              <p class="text-muted-foreground">123 Creator Street</p>
+              <p class="text-muted-foreground">San Francisco, CA 94102</p>
+            </div>
+          </div>
+
+          <!-- Help Center -->
+          <div class="p-6 bg-gradient-to-r from-indigo-500 to-blue-500 text-white rounded-xl shadow-soft">
+            <h3 class="font-bold mb-2">Need immediate assistance?</h3>
+            <p class="opacity-90 mb-4">
+              Check out our Help Center for instant answers to common questions.
+            </p>
+            <a href="{% url 'help' %}" class="inline-block bg-white text-indigo-600 font-semibold py-2 px-4 rounded-md hover:bg-gray-100 transition">
+              Visit Help Center
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

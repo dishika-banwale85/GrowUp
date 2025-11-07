@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Welcome to GrowUp{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrowUp | Share Everywhere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css">
+</head>
+<body class="min-h-screen bg-gray-50">
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden py-20 md:py-32 bg-white">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 opacity-10"></div>
+    <div class="container mx-auto px-4 relative">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-blue-700 mb-6 leading-tight">
+          Share Your Content
+          <span class="block text-purple-600 mt-2">Everywhere, Instantly</span>
+        </h1>
+        <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+          Connect all your social media accounts and share your content across every platform with a single upload.
+          Built for creators, influencers, and dreamers.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          {% if not user.is_authenticated %}
+            <a href="{% url 'signup' %}" class="btn btn-primary">Get Started Free</a>
+          {% endif %}
+          <a href="/exploring" class="border border-blue-700 text-blue-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition">
+            Explore Features
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-4">Why Choose GrowUp?</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Everything you need to manage and grow your online presence
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Feature 1 -->
+        <div class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+          <i data-lucide="share-2" class="w-8 h-8 text-purple-600 mb-4"></i>
+          <h3 class="text-xl font-semibold text-blue-700 mb-3">Share Everywhere</h3>
+          <p class="text-gray-600">Upload once and automatically share across all your connected social media platforms.</p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+          <i data-lucide="zap" class="w-8 h-8 text-purple-600 mb-4"></i>
+          <h3 class="text-xl font-semibold text-blue-700 mb-3">Lightning Fast</h3>
+          <p class="text-gray-600">Save hours of manual posting with our intelligent distribution system.</p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+          <i data-lucide="users" class="w-8 h-8 text-purple-600 mb-4"></i>
+          <h3 class="text-xl font-semibold text-blue-700 mb-3">Grow Your Audience</h3>
+          <p class="text-gray-600">Reach more people by maintaining consistent presence across all platforms.</p>
+        </div>
+        <!-- Feature 4 -->
+        <div class="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+          <i data-lucide="globe" class="w-8 h-8 text-purple-600 mb-4"></i>
+          <h3 class="text-xl font-semibold text-blue-700 mb-3">All Platforms</h3>
+          <p class="text-gray-600">Connect Instagram, TikTok, YouTube, Twitter, and more in one place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="bg-gradient-to-r from-blue-700 to-purple-700 p-12 rounded-2xl text-center shadow-lg">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+          Ready to Amplify Your Reach?
+        </h2>
+        <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          Join thousands of creators who are already growing their audience with GrowUp.
+        </p>
+        {% if not user.is_authenticated %}
+          <a href="{% url 'signup' %}" class="bg-white text-blue-700 font-semibold text-lg px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+            Start Your Journey
+          </a>
+        {% else %}
+          <a href="/dashboard" class="bg-white text-blue-700 font-semibold text-lg px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+            Go to Dashboard
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
+{% endblock %}

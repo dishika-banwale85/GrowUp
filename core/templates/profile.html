@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% block title %}My Profile | GrowUp{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<style>
+:root {
+    --cream: #EEE5C2;
+    --navy: #1B475D;
+    --mint: #8EBD9D;
+    --gold: #FAD564;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--cream);
+    color: var(--navy);
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-3px);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--mint);
+}
+
+.profile-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--navy);
+}
+
+.profile-header p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.profile-header a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.profile-header a:hover {
+    background: var(--gold);
+    color: #fff;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 25px 0;
+}
+
+h3 {
+    color: var(--navy);
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    padding: 10px 15px;
+    background: var(--cream);
+    margin-bottom: 8px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul li strong {
+    color: var(--mint);
+}
+
+.btn {
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: 0.2s;
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--mint);
+    color: var(--mint);
+}
+
+.btn-outline-primary:hover {
+    background: var(--mint);
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    border: 2px solid #ccc;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.btn-group {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+    }
+}
+</style>
+
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <img src="{{ user.profile.image.url|default:'/static/images/default-avatar.png' }}" class="profile-pic">
+      <div>
+        <h2>{{ user.first_name|default:user.username }}</h2>
+        <p>{{ user.email }}</p>
+        <a href="{% url 'edit_profile' %}">✏️ Edit Profile</a>
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>Connected Accounts</h3>
+    <ul>
+      {% for account in user.socialaccount_set.all %}
+        <li>
+          <strong>{{ account.provider|capfirst }}</strong> — Connected as {{ account.extra_data.username }}
+        </li>
+      {% empty %}
+        <p>No verified accounts linked yet.</p>
+      {% endfor %}
+    </ul>
+
+    <div class="mt-4">
+      <h4>Connect / View Accounts:</h4>
+      <div class="btn-group">
+        {% if "google" not in connected_providers %}
+          <a href="{% provider_login_url 'google' process='connect' %}" class="btn btn-outline-primary">Connect Google</a>
+        {% else %}
+          <button class="btn btn-outline-secondary" disabled>Google Connected</button>
+        {% endif %}
+
+        {% if "instagram" not in connected_providers %}
+          <a href="{% url 'instagram_login' %}" class="btn btn-outline-primary">Connect Instagram</a>
+        {% else %}
+          <a href="{% url 'instagram_profile' %}" class="btn btn-outline-primary">View Instagram Profile</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>Account Details</h3>
+    <ul>
+      <li><strong>Full Name:</strong> {{ user.get_full_name|default:user.username }}</li>
+      <li><strong>Email:</strong> {{ user.email }}</li>
+      <li><strong>Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</li>
+      <li><strong>Last Login:</strong> {{ user.last_login|date:"F j, Y, g:i a" }}</li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

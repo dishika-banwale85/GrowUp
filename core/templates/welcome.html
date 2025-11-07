@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Welcome | GrowUp{% endblock %}
+
+{% block content %}
+<div class="welcome-container">
+  <h1>✨ Welcome to <span class="highlight">GrowUp</span>, {{ user.username }}!</h1>
+  <p class="subtitle">
+    You’ve successfully logged in — let’s elevate your creator journey. 🚀
+  </p>
+
+  <div class="actions">
+    <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+  </div>
+</div>
+{% endblock %}

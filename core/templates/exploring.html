@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Exploring | GrowUp{% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-indigo-600 mb-4">
+          Explore Features
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+          Discover powerful tools designed to help you grow your audience and streamline your content strategy.
+        </p>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        {% for feature in features %}
+        <div class="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition-all hover:-translate-y-1">
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-3 rounded-lg bg-indigo-100 text-indigo-600">
+              <i class="fas fa-star"></i>
+            </div>
+            <span class="text-sm px-3 py-1 rounded-full bg-indigo-600 text-white">{{ feature.badge }}</span>
+          </div>
+          <h3 class="text-xl font-bold text-indigo-600 mb-3">{{ feature.title }}</h3>
+          <p class="text-gray-600 mb-4">{{ feature.description }}</p>
+          <a href="#" class="block w-full text-center border border-indigo-500 text-indigo-500 py-2 rounded-lg hover:bg-indigo-500 hover:text-white transition">
+            Learn More
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Supported Platforms -->
+      <div class="p-8 mb-8 bg-white rounded-2xl shadow">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-6 text-center">
+          Supported Platforms
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {% for platform in platforms %}
+          <div class="flex flex-col items-center p-4 rounded-lg bg-gray-100 hover:bg-gray-200 transition">
+            <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-2">
+              <span class="text-xl font-bold text-indigo-600">{{ platform|first }}</span>
+            </div>
+            <span class="font-medium text-gray-700">{{ platform }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <div class="p-8 bg-gradient-to-r from-indigo-500 to-purple-500 text-center rounded-2xl shadow-lg text-white">
+        <h2 class="text-3xl font-bold mb-4">
+          Ready to Explore?
+        </h2>
+        <p class="text-xl opacity-90 mb-6">
+          Start using these powerful features today.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#" class="px-6 py-3 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-100 transition">Start Free Trial</a>
+          <a href="#" class="px-6 py-3 border border-white font-semibold rounded-lg hover:bg-white hover:text-indigo-600 transition">View Pricing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

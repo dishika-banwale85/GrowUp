@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block title %}Content Management | GrowUp{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-background py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+          Content Management
+        </h1>
+        <p class="text-xl text-muted-foreground">
+          Upload once, share everywhere. Manage all your content from one dashboard.
+        </p>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="p-8 mb-12 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl shadow-soft text-center">
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mb-4">
+            <!-- Upload Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5m0 0l5 5m-5-5v12" />
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-primary mb-3">Upload Your Content</h2>
+          <p class="text-muted-foreground mb-6 max-w-md">
+            Drag and drop your images or videos here, or click to browse your files.
+          </p>
+          <button class="bg-primary text-white px-6 py-3 rounded-md mb-4 hover:bg-primary/90 transition">
+            Choose Files
+          </button>
+          <p class="text-sm text-muted-foreground">
+            Supports JPG, PNG, MP4, MOV up to 100MB
+          </p>
+        </div>
+      </div>
+
+      <!-- Content Types -->
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <!-- Images -->
+        <div class="p-6 bg-white shadow-soft hover:shadow-medium transition-shadow rounded-xl flex items-start space-x-4">
+          <div class="p-3 rounded-lg bg-secondary/20 text-secondary">
+            <!-- Image Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h18M3 5v14a2 2 0 002 2h14a2 2 0 002-2V5M3 5l9 7 9-7" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-primary mb-2">Images</h3>
+            <p class="text-muted-foreground">Share photos across all platforms</p>
+          </div>
+        </div>
+
+        <!-- Videos -->
+        <div class="p-6 bg-white shadow-soft hover:shadow-medium transition-shadow rounded-xl flex items-start space-x-4">
+          <div class="p-3 rounded-lg bg-secondary/20 text-secondary">
+            <!-- Video Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553 2.276A1 1 0 0120 13.118v.764a1 1 0 01-.447.842L15 17m0-7v7m-6 0V7a2 2 0 012-2h6a2 2 0 012 2v10m-8-2H5a2 2 0 01-2-2V7a2 2 0 012-2h6" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-primary mb-2">Videos</h3>
+            <p class="text-muted-foreground">Upload videos once, distribute everywhere</p>
+          </div>
+        </div>
+
+        <!-- Schedule -->
+        <div class="p-6 bg-white shadow-soft hover:shadow-medium transition-shadow rounded-xl flex items-start space-x-4">
+          <div class="p-3 rounded-lg bg-secondary/20 text-secondary">
+            <!-- Calendar Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-10 4h10m-12 5h14a2 2 0 002-2V7H4v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-primary mb-2">Schedule</h3>
+            <p class="text-muted-foreground">Plan your content calendar</p>
+          </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="p-6 bg-white shadow-soft hover:shadow-medium transition-shadow rounded-xl flex items-start space-x-4">
+          <div class="p-3 rounded-lg bg-secondary/20 text-secondary">
+            <!-- Bar Chart Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19h16M8 19V9m4 10V5m4 14v-7" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-primary mb-2">Analytics</h3>
+            <p class="text-muted-foreground">Track performance across platforms</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Uploads -->
+      <div class="p-6 bg-white shadow-soft rounded-xl">
+        <h3 class="text-xl font-bold text-primary mb-4">Recent Uploads</h3>
+        <div class="space-y-4">
+          <!-- Upload 1 -->
+          <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 bg-secondary/20 rounded"></div>
+              <div>
+                <p class="font-medium text-primary">Summer vibes 2024</p>
+                <p class="text-sm text-muted-foreground">Shared to 5 platforms</p>
+              </div>
+            </div>
+            <button class="border border-gray-300 text-sm px-4 py-2 rounded-md hover:bg-gray-100 transition">View</button>
+          </div>
+
+          <!-- Upload 2 -->
+          <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+            <div class="flex items-center space-x-3">
+              <div class="w-12 h-12 bg-accent/20 rounded"></div>
+              <div>
+                <p class="font-medium text-primary">Product launch video</p>
+                <p class="text-sm text-muted-foreground">Shared to 3 platforms</p>
+              </div>
+            </div>
+            <button class="border border-gray-300 text-sm px-4 py-2 rounded-md hover:bg-gray-100 transition">View</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ ig_user.username }} • Instagram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #555;
+        }
+        .profile-info h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .profile-info p {
+            margin: 5px 0 0 0;
+            color: #666;
+        }
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            border-top: 1px solid #dbdbdb;
+            padding-top: 15px;
+        }
+        .profile-stats div {
+            text-align: center;
+        }
+        .profile-stats div span {
+            display: block;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-pic">{{ ig_user.username|first|upper }}</div>
+            <div class="profile-info">
+                <h2>{{ ig_user.username }}</h2>
+                <p>Account type: {{ ig_user.account_type }}</p>
+            </div>
+        </div>
+        <div class="profile-stats">
+            <div>
+                <span>0</span>
+                Posts
+            </div>
+            <div>
+                <span>0</span>
+                Followers
+            </div>
+            <div>
+                <span>0</span>
+                Following
+            </div>
+        </div>
+    </div>
+</body>
+</html>

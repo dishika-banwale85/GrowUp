@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Profile | GrowUp{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 rounded-4">
+        <h3 class="text-center mb-4">Edit Your Profile</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Account Details</h5>
+                    {{ user_form.as_p }}
+                </div>
+                <div class="col-md-6">
+                    <h5>Profile Details</h5>
+                    {{ profile_form.as_p }}
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn btn-success px-4" type="submit">Save Changes</button>
+                <a href="{% url 'home' %}" class="btn btn-secondary px-4 ms-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

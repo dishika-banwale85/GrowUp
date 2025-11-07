@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}GrowUp{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+  <body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
+    <!-- NAVBAR -->
+    <nav class="bg-blue-600 text-white shadow-md">
+      <div class="container mx-auto flex items-center justify-between py-4 px-6">
+        <a href="{% url 'home' %}" class="text-2xl font-bold tracking-wide">GrowUp</a>
+        <ul class="flex space-x-6 text-white">
+          <li><a href="{% url 'home' %}" class="hover:text-sky-200">Home</a></li>
+          <li><a href="{% url 'exploring' %}" class="hover:text-sky-200">Explore</a></li>
+          <li><a href="{% url 'contact' %}" class="hover:text-sky-200">Contact</a></li>
+          <li><a href="{% url 'support' %}" class="hover:text-sky-200">Support</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'profile' %}" class="hover:text-sky-200">Profile</a></li>
+            <li><a href="{% url 'logout' %}" class="hover:text-sky-200">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}" class="hover:text-sky-200">Login</a></li>
+            <li><a href="{% url 'signup' %}" class="hover:text-sky-200">Signup</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow container mx-auto px-6 py-10">
+      {% block content %}
+      {% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-800 text-white text-center py-4">
+      <p class="text-sm">&copy; 2025 GrowUp — Connect Your Social World 🌐</p>
+      <div class="mt-2">
+        <a href="{% url 'contact' %}" class="text-sky-400 hover:text-white mx-2">Contact</a> |
+        <a href="{% url 'support' %}" class="text-sky-400 hover:text-white mx-2">Support</a> |
+        <a href="{% url 'help' %}" class="text-sky-400 hover:text-white mx-2">Help</a>
+      </div>
+    </footer>
+  </body>
+</html>

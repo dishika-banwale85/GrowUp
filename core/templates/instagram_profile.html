@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Instagram Profile | GrowUp{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="profile-header">
+        <div class="profile-pic">{{ ig_user.username|first|upper }}</div>
+        <div>
+            <h2>{{ ig_user.username }}</h2>
+            <p>Account Type: {{ ig_user.account_type }}</p>
+            <p><strong>{{ followers }}</strong> Followers | <strong>{{ following }}</strong> Following</p>
+            <p><strong>{{ ig_user.media_count|default:ig_media|length }}</strong> Posts</p>
+        </div>
+    </div>
+
+    <h3>Posts</h3>
+    <div class="media-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;">
+        {% for post in ig_media %}
+            {% if post.media_type in ['IMAGE','CAROUSEL_ALBUM'] %}
+                <a href="{{ post.permalink }}" target="_blank">
+                    <img src="{{ post.media_url }}" alt="{{ post.caption|default:'Instagram post' }}" style="width:100%;border-radius:8px;">
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
