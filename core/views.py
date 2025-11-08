@@ -9,7 +9,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from urllib.parse import urlencode
-
+import os
 from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, SocialLinkForm
 from .models import SocialLink
 
@@ -75,15 +75,27 @@ def logout_view(request):
 
 
 # ------------------ PROFILE ------------------
+
+
 @login_required
 def profile_view(request):
     """Show user profile and connected social accounts"""
     user = request.user
+
+    # Existing connected accounts (like Google, etc.)
     connected_accounts = SocialAccount.objects.filter(user=user)
     connected_providers = [acc.provider for acc in connected_accounts]
+
+    # Instagram session data (from OAuth flow)
+    instagram_user = request.session.get('ig_user')
+    instagram_connected = bool(instagram_user)
+    instagram_username = instagram_user.get('username') if instagram_user else None
+
     context = {
         'connected_accounts': connected_accounts,
         'connected_providers': connected_providers,
+        'instagram_connected': instagram_connected,
+        'instagram_username': instagram_username,
     }
     return render(request, 'profile.html', context)
 
@@ -142,9 +154,9 @@ def google_callback(request):
     token_url = "https://oauth2.googleapis.com/token"
     data = {
         "code": code,
-        "client_id": '792664826369-mu65ssejfl51hn72r6frefh01aummvu1.apps.googleusercontent.com',
-        "client_secret": 'GOCSPX-zQQN5l1qURwNF3cZsettings.GOOGLE_REDIRECT_msnZjr9MAjBI',
-        "redirect_uri": 'https://arrythmical-meridith-unvenially.ngrok-free.dev/account/google/login/callback/',
+    'GOOGLE_CLIENT_ID': str(os.getenv('GOOGLE_CLIENT_ID')),
+    'GOOGLE_CLIENT_SECRET': str(os.getenv('GOOGLE_CLIENT_SECRET')),
+    'GOOGLE_REDIRCT_URI': str(os.getenv('GOOGLE_REDIRCT_URI ')),
         "grant_type": "authorization_code"
     }
 
@@ -188,18 +200,26 @@ def add_social_link(request):
 # ------------------ INSTAGRAM OAUTH ------------------
 def instagram_login(request):
     """Redirect user to Instagram authorization page"""
+    client_id = settings.INSTAGRAM_CLIENT_ID
+    redirect_uri = settings.INSTAGRAM_REDIRECT_URI
+    scope = (
+        "instagram_business_basic,"
+        "instagram_business_manage_messages,"
+        "instagram_business_manage_comments,"
+        "instagram_business_content_publish,"
+        "instagram_business_manage_insights"
+    )
+
     auth_url = (
         f"https://www.instagram.com/oauth/authorize"
-        f"?client_id={'4099924166924965'}"
-        f"&redirect_uri={'https://arrythmical-meridith-unvenially.ngrok-free.dev/auth/instagram/callback/'}"
-        f"&scope=instagram_business_basic,instagram_business_manage_messages,"
-        f"instagram_business_manage_comments,instagram_business_content_publish,"
-        f"instagram_business_manage_insights"
+        f"?client_id={client_id}"
+        f"&redirect_uri={redirect_uri}"
+        f"&scope={scope}"
         f"&response_type=code"
         f"&force_reauth=true"
     )
-    return redirect(auth_url)
 
+    return redirect(auth_url)
 
 @csrf_exempt
 def instagram_callback(request):
@@ -207,26 +227,46 @@ def instagram_callback(request):
     code = request.GET.get('code')
     if not code:
         return render(request, "error.html", {"message": "Authorization failed or cancelled."})
+
+    client_id = settings.INSTAGRAM_CLIENT_ID
+    client_secret = settings.INSTAGRAM_CLIENT_SECRET
+    redirect_uri = settings.INSTAGRAM_REDIRECT_URI
+
     data = {
-        'client_id': "4099924166924965",
-        'client_secret': "758405ee85889118b25bb756bbc3fd49",
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'redirect_uri': redirect_uri,
         'grant_type': 'authorization_code',
-        'redirect_uri': "https://arrythmical-meridith-unvenially.ngrok-free.dev/auth/instagram/callback/",
         'code': code,
     }
+
+    # Step 1️⃣: Exchange the code for an access token
     response = requests.post(settings.INSTAGRAM_TOKEN_URL, data=data)
     result = response.json()
+
     access_token = result.get('access_token')
     user_id = result.get('user_id')
+
     if access_token:
-        user_info = requests.get(
-            f"{settings.INSTAGRAM_API_URL}/me?fields=id,username,account_type&access_token={access_token}"
-        ).json()
+        # Step 2️⃣: Fetch Instagram user info
+        user_info_url = f"{settings.INSTAGRAM_API_URL}/me"
+        params = {
+            "fields": "id,username,account_type",
+            "access_token": access_token
+        }
+        user_info = requests.get(user_info_url, params=params).json()
+
+        # Step 3️⃣: Save info in session
         request.session['ig_user'] = user_info
         request.session['ig_token'] = access_token
-        messages.success(request, "Instagram account connected successfully!")
+
+        # Step 4️⃣: Show success message and redirect to profile
+        messages.success(request, f"Instagram account '{user_info.get('username')}' connected successfully!")
         return redirect('profile')
-    return render(request, "error.html", {"message": "Failed to get access token."})
+
+    # Step 5️⃣: Handle errors
+    error_message = result.get("error_message", "Failed to get access token.")
+    return render(request, "error.html", {"message": error_message})
 
 
 @login_required

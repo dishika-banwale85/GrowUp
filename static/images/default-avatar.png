@@ -1,1 +1,0 @@
-<img src="{{ user.profile.image.url|default:'/static/images/default-avatar.png' }}" class="profile-pic">

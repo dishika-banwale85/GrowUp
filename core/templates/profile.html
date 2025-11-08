@@ -4,7 +4,6 @@
 
 {% block content %}
 {% load static %}
-
 <style>
 :root {
     --cream: #EEE5C2;
@@ -12,7 +11,6 @@
     --mint: #8EBD9D;
     --gold: #FAD564;
 }
-
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--cream);
@@ -20,13 +18,11 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .profile-container {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
 }
-
 .profile-card {
     background: #fff;
     border-radius: 20px;
@@ -34,37 +30,24 @@ body {
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
 }
-
 .profile-card:hover {
     transform: translateY(-3px);
 }
-
 .profile-header {
     display: flex;
     align-items: center;
     gap: 20px;
 }
-
-.profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--mint);
-}
-
 .profile-header h2 {
     margin: 0;
     font-size: 24px;
     color: var(--navy);
 }
-
 .profile-header p {
     margin: 5px 0;
     font-size: 14px;
     color: #555;
 }
-
 .profile-header a {
     display: inline-block;
     margin-top: 10px;
@@ -76,29 +59,24 @@ body {
     text-decoration: none;
     transition: 0.2s;
 }
-
 .profile-header a:hover {
     background: var(--gold);
     color: #fff;
 }
-
 hr {
     border: 0;
     height: 1px;
     background: #ddd;
     margin: 25px 0;
 }
-
 h3 {
     color: var(--navy);
     margin-bottom: 15px;
 }
-
 ul {
     list-style: none;
     padding-left: 0;
 }
-
 ul li {
     padding: 10px 15px;
     background: var(--cream);
@@ -108,41 +86,8 @@ ul li {
     justify-content: space-between;
     align-items: center;
 }
-
 ul li strong {
     color: var(--mint);
-}
-
-.btn {
-    padding: 6px 12px;
-    border-radius: 10px;
-    font-weight: 500;
-    text-decoration: none;
-    margin-right: 10px;
-    transition: 0.2s;
-}
-
-.btn-outline-primary {
-    border: 2px solid var(--mint);
-    color: var(--mint);
-}
-
-.btn-outline-primary:hover {
-    background: var(--mint);
-    color: #fff;
-}
-
-.btn-outline-secondary {
-    border: 2px solid #ccc;
-    color: #aaa;
-    cursor: not-allowed;
-}
-
-.btn-group {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
 }
 
 @media (max-width: 600px) {
@@ -155,12 +100,111 @@ ul li strong {
         height: 80px;
     }
 }
-</style>
+/* ---------- Unified Navbar Style ---------- */
+.navbar {
+  background-color: var(--navy);
+  color: var(--cream);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  border-bottom: 2px solid var(--gold);
+  font-family: 'Poppins', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
+.navbar .logo {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.navbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar nav a {
+  text-decoration: none;
+  color: var(--cream);
+  font-weight: 500;
+  font-size: 15px;
+  padding: 5px 0;
+
+}
+
+.navbar nav a:hover,
+.navbar nav a:focus {
+  color: var(--gold);
+  
+}
+/* --- Fix Connect Buttons Layout --- */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;      /* allows wrapping on smaller screens */
+  gap: 15px;            /* clean space between buttons */
+  margin-top: 15px;
+  justify-content: flex-start; /* keep them aligned neatly */
+}
+
+/* Buttons styling */
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+  display: inline-block;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--mint);
+  color: var(--mint);
+  background: none;
+}
+.btn-outline-primary:hover {
+  background: var(--mint);
+  color: #fff;
+}
+
+.btn-outline-secondary {
+  border: 2px solid #ccc;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* --- Responsive Fix --- */
+@media (max-width: 600px) {
+  .btn-group {
+    flex-direction: column;   /* stack vertically on phones */
+    align-items: stretch;
+  }
+}
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 15px;
+  }
+  .navbar nav ul {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+}
+
+
+</style>
 <div class="profile-container">
   <div class="profile-card">
     <div class="profile-header">
-      <img src="{{ user.profile.image.url|default:'/static/images/default-avatar.png' }}" class="profile-pic">
       <div>
         <h2>{{ user.first_name|default:user.username }}</h2>
         <p>{{ user.email }}</p>
@@ -169,36 +213,46 @@ ul li strong {
     </div>
 
     <hr>
+<div class="mt-4">
+  <h4>Connected Accounts</h4>
 
-    <h3>Connected Accounts</h3>
-    <ul>
-      {% for account in user.socialaccount_set.all %}
-        <li>
-          <strong>{{ account.provider|capfirst }}</strong> — Connected as {{ account.extra_data.username }}
-        </li>
-      {% empty %}
-        <p>No verified accounts linked yet.</p>
-      {% endfor %}
+  {% if instagram_connected or "google" in connected_providers %}
+    <ul style="list-style: none; padding: 0; margin: 10px 0;">
+      {% if "google" in connected_providers %}
+        <li>✅ Google Account Connected</li>
+      {% endif %}
+      {% if instagram_connected %}
+        <li>✅ Instagram Account Connected — <strong>@{{ instagram_username }}</strong></li>
+      {% endif %}
     </ul>
+  {% else %}
+    <p>No accounts connected yet.</p>
+  {% endif %}
+</div>
 
-    <div class="mt-4">
-      <h4>Connect / View Accounts:</h4>
-      <div class="btn-group">
-        {% if "google" not in connected_providers %}
-          <a href="{% provider_login_url 'google' process='connect' %}" class="btn btn-outline-primary">Connect Google</a>
-        {% else %}
-          <button class="btn btn-outline-secondary" disabled>Google Connected</button>
-        {% endif %}
+<div class="mt-4">
+  <h4>Connect / View Accounts:</h4>
+  <div class="btn-group" style="display: flex; gap: 10px; flex-wrap: wrap;">
+    
+    <!-- Google -->
+    {% if "google" not in connected_providers %}
+      <a href="{% provider_login_url 'google' process='connect' %}" class="btn btn-outline-primary">Connect Google</a>
+    {% else %}
+      <button class="btn btn-outline-secondary" disabled>Google Connected</button>
+    {% endif %}
 
-        {% if "instagram" not in connected_providers %}
-          <a href="{% url 'instagram_login' %}" class="btn btn-outline-primary">Connect Instagram</a>
-        {% else %}
-          <a href="{% url 'instagram_profile' %}" class="btn btn-outline-primary">View Instagram Profile</a>
-        {% endif %}
-      </div>
-    </div>
+    <!-- Instagram -->
+    {% if instagram_connected %}
+      <button class="btn btn-outline-secondary" disabled>
+        ✅ Connected as @{{ instagram_username }}
+      </button>
+    {% else %}
+      <a href="{% url 'instagram_login' %}" class="btn btn-outline-primary">Connect Instagram</a>
+    {% endif %}
 
-    <hr>
+  </div>
+</div>
+<hr>
 
     <h3>Account Details</h3>
     <ul>
