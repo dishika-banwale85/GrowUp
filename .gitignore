@@ -1,26 +1,27 @@
 # Python
-*.pyc
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyo
+.env
+db.sqlite3
+*.log
+*.zip
 
 # Virtual environment
 venv/
 env/
-.venv/
 
 # Django
-*.log
-db.sqlite3
-*.sqlite3
 media/
 staticfiles/
-.idea/
-.vscode/
 
-# Environment / secrets
-.env
-.env.*
-secrets.json
+# React / Node
+growup-frontend/node_modules/
+growup-frontend/dist/
+growup-frontend/.env
 
-# System
-.DS_Store
-Thumbs.db
+# Misc
+.fuse_hidden*
+posts/

@@ -1,0 +1,30 @@
+#find largest even num 
+# def largest_num(arr):
+#     evens = [x for x in arr if x % 2 == 0]
+#     return max(evens) if evens else None
+
+# arr = [1,5,3,8,10,12,32,5]
+# print(largest_num(arr))
+#
+# Find smallest and largest num of an array
+# arr = list(map(int , input().split()))
+# print("smallest number:", min(arr))
+# print("Largest number:" , max(arr))
+
+#without using min and max function
+
+arr=list(map(int, input().split()))
+if len(arr)==0:
+    print("Array is empty")
+else:
+    smallest = arr[0]
+    largest = arr[0]
+
+    for num in arr:
+        if num < smallest:
+            smallest = num
+        if num > largest:
+            largest = num
+
+    print("smallest:", smallest)
+    print("largest:" ,largest)
