@@ -42,11 +42,14 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
-          Create Account 🚀
-        </h2>
+<div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center">    
+<div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-lg mx-4">
+            <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 mb-6 text-center">
+  Create Account ✨
+</h2>
+<p className="text-center text-gray-500 mb-6">
+  Join and start growing your social presence
+</p>
         {error && (
           <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
         )}
@@ -55,27 +58,24 @@ export default function Signup() {
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="w-full border p-3 rounded-lg mb-4 outline-none focus:border-indigo-500"
-        />
+className="w-full border border-gray-200 p-4 rounded-2xl mb-4 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition"        />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border p-3 rounded-lg mb-6 outline-none focus:border-indigo-500"
-        />
+className="w-full border border-gray-200 p-4 rounded-2xl mb-6 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition"        />
         <button
           onClick={handleSignup}
-          className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition"
-        >
+className="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] transition duration-300"        >
           Sign Up
         </button>
 
-        <div className="flex items-center my-4">
-          <hr className="flex-1 border-gray-300" />
-          <span className="px-3 text-gray-400 text-sm">or</span>
-          <hr className="flex-1 border-gray-300" />
-        </div>
+<div className="flex items-center my-6 gap-3">
+  <div className="flex-1 h-px bg-gray-200"></div>
+  <span className="text-xs text-gray-400">or</span>
+  <div className="flex-1 h-px bg-gray-200"></div>
+</div>
 
         <div className="flex justify-center">
           <GoogleLogin
@@ -91,8 +91,7 @@ export default function Signup() {
           Already have an account?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-indigo-600 cursor-pointer font-semibold"
-          >
+className="text-indigo-600 cursor-pointer font-semibold hover:text-pink-500 transition"          >
             Login
           </span>
         </p>
