@@ -2,12 +2,20 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
-load_dotenv() 
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-rr8awn*9-lh9p6n7g(errkbipapj1qlqzqti_d97)rk8)t07zk'
-DEBUG = True
+# ----------------------------------------------------------
+# SECURITY
+# ----------------------------------------------------------
+# Moved to .env — never hardcode this
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    raise ValueError("DJANGO_SECRET_KEY is not set in environment variables.")
+
+# Read from env — default False for safety
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -17,6 +25,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://arrythmical-meridith-unvenially.ngrok-free.dev"
 ]
+
 # ----------------------------------------------------------
 # INSTALLED APPS
 # ----------------------------------------------------------
@@ -42,6 +51,8 @@ INSTALLED_APPS = [
     'tailwind',
     'curvy',
     'django_browser_reload',
+    'rest_framework',
+    'corsheaders',
 ]
 
 SITE_ID = 1
@@ -72,37 +83,45 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# FIX: was True — allows CSRF-based forced login via GET request
+SOCIALACCOUNT_LOGIN_ON_GET = False
+
 SOCIALACCOUNT_DEBUG = True
 
 # ----------------------------------------------------------
 # Instagram OAuth Settings
+# FIX: removed str() wrapper — str(None) gives "None" not None,
+#      silently hiding missing env vars
 # ----------------------------------------------------------
-INSTAGRAM_CLIENT_ID = str(os.getenv('INSTAGRAM_CLIENT_ID'))
-INSTAGRAM_CLIENT_SECRET = str(os.getenv('INSTAGRAM_CLIENT_SECRET'))
-INSTAGRAM_REDIRECT_URI = str(os.getenv('INSTAGRAM_REDIRECT_URI'))
-INSTAGRAM_AUTH_URL = str(os.getenv('INSTAGRAM_AUTH_URL'))
-INSTAGRAM_TOKEN_URL = str(os.getenv('INSTAGRAM_TOKEN_URL'))
-INSTAGRAM_API_URL = str(os.getenv('INSTAGRAM_API_URL'))
-#-----------------------------------------------------------
+INSTAGRAM_CLIENT_ID = os.getenv('INSTAGRAM_CLIENT_ID')
+INSTAGRAM_CLIENT_SECRET = os.getenv('INSTAGRAM_CLIENT_SECRET')
+INSTAGRAM_REDIRECT_URI = os.getenv('INSTAGRAM_REDIRECT_URI')
+INSTAGRAM_AUTH_URL = os.getenv('INSTAGRAM_AUTH_URL')
+INSTAGRAM_TOKEN_URL = os.getenv('INSTAGRAM_TOKEN_URL')
+INSTAGRAM_API_URL = os.getenv('INSTAGRAM_API_URL')
 
-# Allow secure cookies through ngrok
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# So Django knows it’s behind a proxy
-USE_X_FORWARDED_HOST = True
 # ----------------------------------------------------------
 # Google OAuth Settings
+# FIX: removed str() wrapper (same reason as above)
 # ----------------------------------------------------------
-GOOGLE_CLIENT_ID = str(os.getenv('GOOGLE_CLIENT_ID'))
-GOOGLE_CLIENT_SECRET = str(os.getenv('GOOGLE_CLIENT_SECRET'))
-GOOGLE_REDIRECT_URI = str(os.getenv('GOOGLE_REDIRECT_URI'))
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
 
+# ----------------------------------------------------------
+# Facebook Webhook
+# ----------------------------------------------------------
+FACEBOOK_VERIFY_TOKEN = os.getenv('FACEBOOK_VERIFY_TOKEN')
+
+# ----------------------------------------------------------
+# Allauth Social Providers
+# ----------------------------------------------------------
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id':os.getenv('GOOGLE_CLIENT_ID'),
-            'secret':os.getenv('GOOGLE_CLIENT_SECRET'),
+            'client_id': os.getenv('GOOGLE_CLIENT_ID'),
+            'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
             'key': ''
         },
         'SCOPE': ['profile', 'email'],
@@ -110,12 +129,19 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# Allow secure cookies through ngrok
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# So Django knows it's behind a proxy
+USE_X_FORWARDED_HOST = True
+
 # ----------------------------------------------------------
 # MIDDLEWARE
 # ----------------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -138,7 +164,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',  # required by allauth
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -184,3 +210,25 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+CORS_ALLOW_ALL_ORIGINS = True
+
+import cloudinary
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
+)

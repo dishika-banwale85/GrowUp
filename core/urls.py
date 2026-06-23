@@ -23,3 +23,5 @@ urlpatterns = [
     path('accounts/facebook/callback/', views.facebook_callback, name='facebook_callback'),
     path('profile/instagram/', views.instagram_profile_view, name='instagram_profile'),
 ]
+
+
